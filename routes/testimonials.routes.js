@@ -2,9 +2,6 @@ const express = require('express');
 const router = express.Router();
 const db = require('../db');
 
-router.use(express.urlencoded({ extended: false }));
-router.use(express.json());
-
 router.route('/testimonials').get((req, res) => {
     res.json(db.testimonials);
 });

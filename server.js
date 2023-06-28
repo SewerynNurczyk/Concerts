@@ -47,8 +47,8 @@ io.on('connection', (socket) => {
   console.log('New client! Its id' + socket.id);
 });
 
-mongoose.connect("mongodb://localhost:27017/NewWaveDB", {
-  useNewUrlParser: true,
+mongoose.connect('mongodb+srv://snurczyk99:Seweryn1999@cluster0.fin2lpx.mongodb.net/?retryWrites=true&w=majority', {
+  useNewUrlParser: false,
 });
 const db = mongoose.connection;
 

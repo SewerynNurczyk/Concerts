@@ -1,15 +1,16 @@
 const express = require('express');
 const cors = require('cors');
-const uuid = require('uuid');
-const router = express.Router()
 const path = require('path');
 const socket = require('socket.io');
 const mongoose = require("mongoose");
+const helmet = require('helmet');
 
 const app = express();
 
 
 app.use(express.static(path.join(__dirname, '/client/build')));
+app.use(express.urlencoded({ extended: false }));
+app.use(helmet());
 
 app.use((req, res, next) => {
   req.io = io;
@@ -47,9 +48,15 @@ io.on('connection', (socket) => {
   console.log('New client! Its id' + socket.id);
 });
 
-mongoose.connect('mongodb+srv://snurczyk99:Seweryn1999@cluster0.fin2lpx.mongodb.net/db?retryWrites=true&w=majority', {
-  useNewUrlParser: false,
-});
+const NODE_ENV = process.env.NODE_ENV;
+let dbUri = '';
+
+if (NODE_ENV === 'production') dbUri = 'mongodb+srv://snurczyk99:$Seweryn1999@cluster0.fin2lpx.mongodb.net/db?retryWrites=true&w=majority';
+
+else if (NODE_ENV === 'test') dbUri = 'mongodb://localhost:27017/NewWaveDBtest';
+else dbUri = 'mongodb://localhost:27017/NewWaveDB';
+
+mongoose.connect(dbUri, { useNewUrlParser: true, useUnifiedTopology: true });
 
 const db = mongoose.connection;
 
@@ -57,3 +64,5 @@ db.once("open", () => {
   console.log("Connected to the database");
 });
 db.on("error", (err) => console.log("Error " + err));
+
+module.exports = server;

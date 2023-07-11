@@ -38,6 +38,7 @@ app.use((req, res) => {
   res.status(400).send('Not found..');
 });
 
+
 const server = app.listen(process.env.PORT || 8000, () => {
   console.log('Server is running on port: 8000');
 });
@@ -51,7 +52,7 @@ io.on('connection', (socket) => {
 const NODE_ENV = process.env.NODE_ENV;
 let dbUri = '';
 
-if (NODE_ENV === 'production') dbUri = 'mongodb+srv://snurczyk99:$Seweryn1999@cluster0.fin2lpx.mongodb.net/db?retryWrites=true&w=majority';
+if (NODE_ENV === 'production') dbUri = 'mongodb+srv://snurczyk99:${process.env.DB_PASS}@cluster0.fin2lpx.mongodb.net/db?retryWrites=true&w=majority';
 
 else if (NODE_ENV === 'test') dbUri = 'mongodb://localhost:27017/NewWaveDBtest';
 else dbUri = 'mongodb://localhost:27017/NewWaveDB';

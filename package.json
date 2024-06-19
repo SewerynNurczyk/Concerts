@@ -20,7 +20,7 @@
     "onchange": "6.1.0",
     "router": "^1.3.8",
     "snyk": "1.235.0",
-    "socket.io": "2.2.0",
+    "socket.io": "4.7.0",
     "socket.io-client": "2.2.0",
     "uuid": "^9.0.0"
   },
